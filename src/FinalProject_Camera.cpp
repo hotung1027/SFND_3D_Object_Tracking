@@ -328,7 +328,7 @@ int main(int argc, const char *argv[]) {
             cv::namedWindow(windowName, 4);
             cv::imshow(windowName, visImg);
             // cout << "Press key to continue to next frame" << endl;
-            cv::waitKey(0);
+            // cv::waitKey(0);
           }
           bVis = false;
 

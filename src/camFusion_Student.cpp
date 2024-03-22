@@ -221,7 +221,9 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev,
           distCurr >= minDist) { // avoid division by zero
 
         double distRatio = distCurr / distPrev;
-        distRatios.push_back(distRatio);
+        if (distRatio > 1) {
+          distRatios.push_back(distRatio);
+        }
       }
     } // eof inner loop over all matched kpts
   }   // eof outer loop over all matched kpts
