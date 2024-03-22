@@ -80,7 +80,7 @@ int main(int argc, const char *argv[]) {
   bool bVis = false;            // visualize results
 
   /* MAIN LOOP OVER ALL IMAGES */
-  int numImages = 0;
+  int numImages = 1;
   double sum_ttc_lidar = 0.0;
   double sum_ttc_camera = 0.0;
   string descriptorType, detectorType;
@@ -274,8 +274,7 @@ int main(int argc, const char *argv[]) {
             prevBB = &(*it2);
           }
         }
-
-        // compute TTC for current match
+        // compute TTC for prevent match
         if (currBB->lidarPoints.size() > 0 &&
             prevBB->lidarPoints.size() >
                 0) // only compute TTC if we have Lidar points
@@ -302,6 +301,9 @@ int main(int argc, const char *argv[]) {
                            currBB->kptMatches, sensorFrameRate, ttcCamera);
           //// EOF STUDENT ASSIGNMENT
 
+          cout << "Frame : " << numImages << " Image Index : " << imgIndex
+               << " TTC Lidar : " << ttcLidar << " TTC Camera : " << ttcCamera
+               << endl;
           bVis = true;
           if (bVis) {
             cv::Mat visImg = (dataBuffer.end() - 1)->cameraImg.clone();
@@ -318,8 +320,6 @@ int main(int argc, const char *argv[]) {
             sum_ttc_camera += ttcCamera;
             sprintf(str, "TTC Lidar : %f s, TTC Camera : %f s", ttcLidar,
                     ttcCamera);
-            cout << "Frame : " << numImages << " TTC Lidar : " << ttcLidar
-                 << " TTC Camera : " << ttcCamera << endl;
 
             putText(visImg, str, cv::Point2f(80, 50), cv::FONT_HERSHEY_PLAIN, 2,
                     cv::Scalar(0, 0, 255));
@@ -328,7 +328,7 @@ int main(int argc, const char *argv[]) {
             cv::namedWindow(windowName, 4);
             cv::imshow(windowName, visImg);
             // cout << "Press key to continue to next frame" << endl;
-            // cv::waitKey(0);
+            cv::waitKey(0);
           }
           bVis = false;
 
@@ -340,6 +340,6 @@ int main(int argc, const char *argv[]) {
   cout << "Descriptor type : " << descriptorType << " "
        << "Detector type : " << detectorType << endl;
   cout << "Average TTC Lidar : " << sum_ttc_lidar / numImages
-       << "Average TTC Camera : " << sum_ttc_camera / numImages << endl;
+       << " Average TTC Camera : " << sum_ttc_camera / numImages << endl;
   return 0;
 }
