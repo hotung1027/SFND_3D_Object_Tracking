@@ -224,9 +224,9 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img,
                         cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
       string windowName = "Modern Corner Detector Results";
 
-      t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-      cout << detectorType << " descriptor extraction in " << 1000 * t / 1.0
-           << " ms" << endl;
+      // t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+      // cout << detectorType << " descriptor extraction in " << 1000 * t / 1.0
+      //      << " ms" << endl;
       cv::namedWindow(windowName, 6);
       imshow(windowName, visImage);
       cv::waitKey(0);
